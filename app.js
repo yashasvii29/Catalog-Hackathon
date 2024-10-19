@@ -8,26 +8,26 @@ function lagrangeInterpolation(points) {
         let yi = points[i].y;
         let li = 1;
 
-        // Compute the Lagrange basis polynomial L_i(x) at x = 0
+        
         for (let j = 0; j < n; j++) {
             if (i !== j) {
                 li *= (-points[j].x) / (xi - points[j].x);
             }
         }
 
-        // Add contribution of this term to the final constant term
+       
         constantTerm += yi * li;
     }
 
     return Math.round(constantTerm);
 }
 
-// Helper function to decode y-values from different bases
+
 function decodeValue(base, value) {
     return parseInt(value, base);
 }
 
-// Main function to solve the problem
+
 function findSecretPolynomialConstant(inputJSON) {
     const keys = inputJSON.keys;
     const n = keys.n;
@@ -35,14 +35,14 @@ function findSecretPolynomialConstant(inputJSON) {
 
     let points = [];
 
-    // Parse and decode each point from the input JSON
+ 
     for (let i = 1; i <= n; i++) {
-        let point = inputJSON[i.toString()]; // Access the points dynamically using the index as a string
+        let point = inputJSON[i.toString()]; 
         if (point) {
-            let base = parseInt(point.base);  // Access the 'base' value
-            let value = point.value;          // Access the 'value' value
+            let base = parseInt(point.base);  
+            let value = point.value;          
 
-            // x is the index (i), y is the decoded value
+            
             let x = i;
             let y = decodeValue(base, value);
 
@@ -50,7 +50,7 @@ function findSecretPolynomialConstant(inputJSON) {
         }
     }
 
-    // Apply Lagrange Interpolation to find the constant term (secret 'c')
+   
     const secretConstant = lagrangeInterpolation(points);
 
     return secretConstant;
@@ -127,6 +127,6 @@ const testCase2 = {
     }
 };
 
-// Running test cases
-console.log("Secret for Test Case 1:", findSecretPolynomialConstant(testCase1)); // Example Output
-console.log("Secret for Test Case 2:", findSecretPolynomialConstant(testCase2)); // Example Output
+
+console.log("Secret for Test Case 1:", findSecretPolynomialConstant(testCase1)); 
+console.log("Secret for Test Case 2:", findSecretPolynomialConstant(testCase2)); 
